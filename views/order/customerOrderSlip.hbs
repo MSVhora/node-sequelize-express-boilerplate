@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Retail Invoice</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;500&display=swap");
+      body {
+        font-family: "Poppins", sans-serif;
+      }
+      .container {
+        margin-left: 10%;
+        margin-right: 10%;
+        padding: 3%;
+      }
+      caption {
+        font-size: 20px;
+      }
+      .heading-1 {
+        font-size: 15px !important;
+      }
+      .row-2 {
+        width: 50%;
+        padding: 1%;
+      }
+      table {
+        border: 2px solid black;
+      }
+      .row-2 {
+        font-size: 15px;
+      }
+      span {
+        text-align: right;
+      }
+      .row-3 {
+        font-size: 15px;
+        padding: 1%;
+      }
+      .row-4 {
+        font-size: 15px;
+      }
+      .row-5 {
+        width: 15%;
+        font-size: 15px;
+      }
+
+      .row-6 {
+        font-size: 15px;
+        padding: 1%;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <table border="2px" cellspacing="0" color="black">
+        <thead>
+          <tr>
+            <th colspan="11" scope="row">
+              <h2>Tax Invoice / Bill Of Supply</h2>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td colspan="6" class="row-2" scope="row">
+              <h2 class="heading-1">
+                  {{store.name}} - {{store.address}} {{store.city}} - {{store.pincode}} {{store.state}}
+                {{!-- Super store Mumbai Goregaon West ES21 (LA) LA Super Retail
+                Private Limited, Harmony Mall, Sejal Park, Bhagat Singh II,
+                Goregaon West, Mumbai, Maharashtra 400104 Mumbai 400104 --}}
+              </h2>
+              <p class="sub-heading"><b>Pin code </b> : {{store.pincode}}</p>
+              <p class="sub-heading"><b>GST </b> : {{store.gst}}</p>
+              <p class="sub-heading"><b>License Id </b> : {{store.licenseId}}</p>
+            </td>
+            <td colspan="5" class="row-2" scope="row">
+              <p class="sub-heading"><b>Order Id </b> :{{order.id}}</p>
+              <p class="sub-heading"><b>Invoice No.</b> : {{order.invoiceNumber}}</p>
+              <p class="sub-heading"><b>Date </b> : {{order.date}}</p>
+              <p class="sub-heading"><b>CIN No.</b> : {{store.CIN}}</p>
+              <p class="sub-heading"><b>PAN No. </b>: {{store.pan}}</p>
+              <p class="sub-heading"><b>Place of Supply</b> : {{customer.state}}</p>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="6" class="row-3" scope="row">
+              <p class="sub-heading">
+                <b>Invoice To Name </b> :{{customer.name}}
+              </p>
+              <p class="sub-heading">
+                <b>Address</b> : {{customer.address}}
+              </p>
+            </td>
+            <td colspan="5" class="row-3" scope="row"></td>
+          </tr>
+          {{#if order.displayItems}}
+            <tr class="row-4" scope="row">
+                <th>Sr.no</th>
+                {{!-- <th>Item Code</th> --}}
+                <th>Description</th>
+                <th>Qty.</th>
+                <th>Mrp.</th>
+                <th>Unit Price (Excluding tax)</th>
+                <th>SubTotal (Excluding tax)</th>
+                <th>GST(%)</th>
+                <th>Cess(%)</th>
+                <th>Additional Cess Val</th>
+                <th>Net Amount (including tax)</th>
+              </tr>
+            {{#each order.items}}
+              <tr class="row-5" scope="row">
+                <td>{{inc @index }}</td>
+                {{!-- <td>100457 29</td> --}}
+                <td>{{this.name}}</td>
+                <td>{{this.quantity}}</td>
+                <td>{{this.price}}</td>
+                <td>{{this.price}}</td>
+                <td>{{this.subTotal}}</td>
+                <td>{{this.gst}}</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td>{{this.total}}</td>
+              </tr>
+            {{/each}} 
+          {{/if}}
+          <tr>
+            <td colspan="11" class="row-6" scope="row">
+              <b>
+                Sub Total (excluding tax)
+                <span style="float: right">{{order.subTotal}}</span><br /><br />
+                Tax Total (inclusive of cess)
+                <span style="float: right">0</span> <br /><br />
+                Total Delivery Fee
+                <span style="float: right">{{order.deliveryFee}}</span> <br /><br />
+                Total Payable(including tax)
+                <span style="float: right"> {{order.total}}</span><br />
+                <br />
+              </b>
+              {{!-- CGST = {{order.subTotal}} * 6.0% = 9.00 <br />
+              Total CGST = 9.00 <br />
+              SGST = {{order.subTotal}} * 6.0% = 9.00, <br />
+              Total SGST = 9.00 <br />
+              CESS = {{order.subTotal}} * 0.0% = 0.00, <br />
+              Total CESS = 0.00 <br /> --}}
+              {{!-- <img
+                src="./imgs/QR_code_for_mobile_English_Wikipedia.svg.png"
+                height="75px"
+                width="75px"
+                alt=""
+              /> --}}
+              <br />
+              <p>
+                This is a computer generated Invoice and Signature is not
+                required
+              </p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
